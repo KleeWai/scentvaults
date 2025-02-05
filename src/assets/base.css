@@ -132,7 +132,7 @@ p {
 
 /* Card component for lists like collections */
 .card {
-  background-color: var(--color-background-soft);
+  background-color: rgb(197, 197, 255);
   padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 8px;

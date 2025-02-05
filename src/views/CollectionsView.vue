@@ -125,5 +125,10 @@
     padding-bottom: 2%;
 }
 
+.title
+{
+    color: #000000;
+}
+
 </style>
   
