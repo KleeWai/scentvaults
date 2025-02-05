@@ -1,22 +1,39 @@
 <template>
     <div class="collections">
-      <h1 class="title">Our Collections</h1>
-      <div class="grid">
-        <div
-          v-for="(cologne, index) in colognes"
-          :key="index"
-          class="card"
-        >
-          <h2 class="name">{{ cologne.name }}</h2>
-          <p class="brand">Brand: {{ cologne.brand }}</p>
-          <p class="retail">Retail Price: ${{ cologne.retail }}</p>
-          <p class="discount">Discounted Price: ${{ cologne.discounted }}</p>
+      <div class="container">
+        <h1 class="title">Our Collections</h1>
+  
+        <!-- Search Bar -->
+        <div class="search-container">
+          <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Search for a cologne by name or brand..."
+            class="search-bar"
+          />
+        </div>
+  
+        <!-- Grid Layout -->
+        <div class="grid">
+          <div
+            v-for="(cologne, index) in filteredColognes"
+            :key="index"
+            class="card"
+          >
+            <h2 class="name">{{ cologne.name }}</h2>
+            <p class="brand">Brand: {{ cologne.brand }}</p>
+            <p class="retail">Retail Price: ${{ cologne.retail }}</p>
+            <p class="discount">Discounted Price: ${{ cologne.discounted }}</p>
+          </div>
         </div>
       </div>
     </div>
   </template>
   
   <script setup>
+  import { ref, computed } from 'vue';
+  
+  const searchQuery = ref('');
   const colognes = [
   { name: "Wish You Were Here", brand: "Mémoire Archives", retail: 50, discounted: 25 },
     { name: "Legend Red", brand: "Montblac", retail: 60, discounted: 60 },
@@ -88,56 +105,25 @@
   { name: "Herod", brand: "PDM", retail: 365, discounted: 270 },
   { name: "Grand Soir", brand: "MFK", retail: 245, discounted: 317 },
 
+    // Add your full collection list here
   ];
+  
+  const filteredColognes = computed(() => {
+    if (!searchQuery.value.trim()) return colognes;
+    const query = searchQuery.value.toLowerCase();
+    return colognes.filter(
+      (cologne) =>
+        cologne.name.toLowerCase().includes(query) ||
+        cologne.brand.toLowerCase().includes(query)
+    );
+  });
   </script>
-  
-  <style scoped>
-  .collections {
-    background-color: #f9f9f9; /* Background color for the full section */
-    padding: 2rem;
-    width: 100%; /* Ensure full width */
-    box-sizing: border-box;
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: #333;
-  }
-  
-  .grid {
-    max-width: 1200px; /* Center the grid and restrict its width */
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  .card {
-    background-color: #e0f7fa; /* Card background color */
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .card h2 {
-    font-size: 1.25rem;
-    color: #000;
-    margin-bottom: 0.5rem;
-  }
-  
-  .card p {
-    margin: 0.5rem 0;
-    color: #555;
-  }
-  
-  body, html {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  </style>
+
+<style scoped>
+.search-container
+{
+    padding-bottom: 2%;
+}
+
+</style>
   
