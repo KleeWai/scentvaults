@@ -25,6 +25,10 @@
           <li>Authentic products</li>
           <li>Curated selection of premium brands</li>
         </ul>
+        <!-- View Collections Button -->
+        <RouterLink to="/collections" class="button">
+          View Our Collection of over 70 designer colognes!!
+        </RouterLink>
       </div>
       <div class="images">
         <img :src="designerImage1" alt="Designer Cologne">
@@ -47,6 +51,10 @@
           <li>Create unique and personal combinations</li>
           <li>Adapt scents to different occasions</li>
         </ul>
+        <!-- View Collections Button -->
+        <RouterLink to="/collections" class="button">
+          Explore More Scents
+        </RouterLink>
       </div>
       <div class="images">
         <img :src="layeringImage1" alt="Handmade Layering Scents">
@@ -124,6 +132,24 @@ ul {
   height: auto; /* Maintain aspect ratio */
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
 }
 
 @media (max-width: 768px) {
