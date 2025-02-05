@@ -117,6 +117,7 @@ p {
 }
 
 ul {
+  color: rgb(0, 0, 0);
   list-style: disc;
   margin-left: 1.5rem;
   margin-bottom: 1rem;
