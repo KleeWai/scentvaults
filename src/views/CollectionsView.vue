@@ -9,7 +9,7 @@
           <input
             type="text"
             v-model="searchQuery"
-            placeholder="Search for a cologne by name or brand..."
+            placeholder="Search by name or brand..."
             class="search-bar"
           />
   
@@ -170,13 +170,13 @@ const sortedAndFilteredColognes = computed(() => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  gap: 1rem; /* Adds space between search and sort */
 }
 
 .search-bar {
   flex: 1;
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  margin-right: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
 }
@@ -190,5 +190,17 @@ const sortedAndFilteredColognes = computed(() => {
   cursor: pointer;
 }
 
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .search-sort-container {
+    flex-direction: column; /* Stacks items vertically */
+    align-items: stretch; /* Makes both elements take full width */
+  }
+
+  .search-bar,
+  .sort-dropdown {
+    width: 100%; /* Ensures full width */
+  }
+}
 </style>
   
