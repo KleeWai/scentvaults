@@ -3,20 +3,30 @@
       <div class="container">
         <h1 class="title">Our Collections</h1>
   
-        <!-- Search Bar -->
-        <div class="search-container">
+        <!-- Search and Sort Container -->
+        <div class="search-sort-container">
+          <!-- Search Bar -->
           <input
             type="text"
             v-model="searchQuery"
             placeholder="Search for a cologne by name or brand..."
             class="search-bar"
           />
+  
+          <!-- Sort Dropdown -->
+          <select v-model="sortOption" class="sort-dropdown">
+            <option value="default">Sort by</option>
+            <option value="retail-asc">Retail Price: Low to High</option>
+            <option value="retail-desc">Retail Price: High to Low</option>
+            <option value="discounted-asc">Discounted Price: Low to High</option>
+            <option value="discounted-desc">Discounted Price: High to Low</option>
+          </select>
         </div>
   
         <!-- Grid Layout -->
         <div class="grid">
           <div
-            v-for="(cologne, index) in filteredColognes"
+            v-for="(cologne, index) in sortedAndFilteredColognes"
             :key="index"
             class="card"
           >
@@ -30,12 +40,15 @@
     </div>
   </template>
   
-  <script setup>
-  import { ref, computed } from 'vue';
   
-  const searchQuery = ref('');
-  const colognes = [
-  { name: "Wish You Were Here", brand: "Mémoire Archives", retail: 50, discounted: 25 },
+  <script setup>
+import { ref, computed } from "vue";
+
+const searchQuery = ref("");
+const sortOption = ref("default");
+
+const colognes = [
+{ name: "Wish You Were Here", brand: "Mémoire Archives", retail: 50, discounted: 25 },
     { name: "Legend Red", brand: "Montblac", retail: 60, discounted: 60 },
     { name: "Sugarful Sunshine", brand: "Michel Germain", retail: 51.95, discounted: 51.95 },
     { name: "Light Blue Pour Homme", brand: "Dolce & Gabbana", retail: 107, discounted: 49 },
@@ -105,19 +118,41 @@
   { name: "Herod", brand: "PDM", retail: 365, discounted: 270 },
   { name: "Grand Soir", brand: "MFK", retail: 245, discounted: 317 },
 
-    // Add your full collection list here
-  ];
-  
-  const filteredColognes = computed(() => {
-    if (!searchQuery.value.trim()) return colognes;
-    const query = searchQuery.value.toLowerCase();
-    return colognes.filter(
-      (cologne) =>
-        cologne.name.toLowerCase().includes(query) ||
-        cologne.brand.toLowerCase().includes(query)
-    );
-  });
-  </script>
+];
+
+// Filter logic
+const filteredColognes = computed(() => {
+  if (!searchQuery.value.trim()) return colognes;
+  const query = searchQuery.value.toLowerCase();
+  return colognes.filter(
+    (cologne) =>
+      cologne.name.toLowerCase().includes(query) ||
+      cologne.brand.toLowerCase().includes(query)
+  );
+});
+
+// Sort and Filter combined
+const sortedAndFilteredColognes = computed(() => {
+  let sortedColognes = [...filteredColognes.value];
+  switch (sortOption.value) {
+    case "retail-asc":
+      sortedColognes.sort((a, b) => a.retail - b.retail);
+      break;
+    case "retail-desc":
+      sortedColognes.sort((a, b) => b.retail - a.retail);
+      break;
+    case "discounted-asc":
+      sortedColognes.sort((a, b) => a.discounted - b.discounted);
+      break;
+    case "discounted-desc":
+      sortedColognes.sort((a, b) => b.discounted - a.discounted);
+      break;
+    default:
+      break;
+  }
+  return sortedColognes;
+});
+</script>
 
 <style scoped>
 .search-container
@@ -128,6 +163,31 @@
 .title
 {
     color: #000000;
+}
+
+.search-sort-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  margin-right: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.sort-dropdown {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
 }
 
 </style>
