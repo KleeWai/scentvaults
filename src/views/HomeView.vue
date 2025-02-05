@@ -74,6 +74,7 @@ import designerImage2 from '../assets/cologneAI2.jpg';
 <style scoped>
 .home {
   font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
   line-height: 1.6;
   color: #333;
   padding: 2rem;
